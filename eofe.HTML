@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador Regresivo</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        .contador-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            color: #4CAF50;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .contador {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ff5722;
+            margin-top: 20px;
+        }
+        .unit {
+            font-size: 0.6em;
+            color: #555;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: #888;
+        }
+        .time-block {
+            display: inline-block;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="contador-container">
+        <h1>Cuenta Regresiva</h1>
+        <p>Faltan:</p>
+        <div class="contador" id="contador">
+            <div class="time-block" id="dias"></div>
+            <div class="time-block" id="horas"></div>
+            <div class="time-block" id="minutos"></div>
+            <div class="time-block" id="segundos"></div>
+        </div>
+        <div class="footer">Comparte este enlace para ver el contador.</div>
+    </div>
+
+    <script>
+        // Fecha de inicio del contador
+        const fechaFinal = new Date();
+        fechaFinal.setDate(fechaFinal.getDate() + 30); // Agregar 30 días
+
+        // Función para actualizar el contador
+        function actualizarContador() {
+            const ahora = new Date();
+            const diferencia = fechaFinal - ahora;
+
+            if (diferencia <= 0) {
+                document.getElementById("contador").innerHTML = "¡El evento ha llegado!";
+                return;
+            }
+
+            const diasRestantes = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horasRestantes = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutosRestantes = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundosRestantes = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+            document.getElementById("dias").innerHTML = `${diasRestantes} <span class='unit'>días</span>`;
+            document.getElementById("horas").innerHTML = `${horasRestantes} <span class='unit'>horas</span>`;
+            document.getElementById("minutos").innerHTML = `${minutosRestantes} <span class='unit'>minutos</span>`;
+            document.getElementById("segundos").innerHTML = `${segundosRestantes} <span class='unit'>segundos</span>`;
+        }
+
+        // Actualizar el contador cada segundo
+        setInterval(actualizarContador, 1000);
+
+        // Inicializar contador
+        actualizarContador();
+    </script>
+</body>
+</html>
